@@ -1,3 +1,19 @@
+
+import java.awt.HeadlessException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import java.sql.Date;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,6 +25,10 @@
  * @author lokesh
  */
 public class Customers extends javax.swing.JFrame {
+    Connection con=null;
+    ResultSet rs=null;
+    PreparedStatement pst=null;
+    
 
     /**
      * Creates new form Customers
@@ -28,63 +48,442 @@ public class Customers extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        cusid = new javax.swing.JTextField();
+        cusname = new javax.swing.JTextField();
+        cusadd = new javax.swing.JTextField();
+        cusphn = new javax.swing.JTextField();
+        cusml = new javax.swing.JTextField();
+        cusdate = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
+        btnnew = new javax.swing.JButton();
+        btnsave = new javax.swing.JButton();
+        btnupdate = new javax.swing.JButton();
+        btndelete = new javax.swing.JButton();
+        btnsearch = new javax.swing.JButton();
+        btndatareport = new javax.swing.JButton();
+        home = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(25, 37, 49));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(120, 204, 255));
 
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel1.setText("Customers");
+
+        jButton1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 0, 0));
+        jButton1.setText("x");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 803, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 785, -1));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 860, -1));
+
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel2.setText("Customer_Id");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 94, 130, -1));
+
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel3.setText("Customer_Name");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 157, 155, -1));
+
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel4.setText("Customer_Address");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 211, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel5.setText("Customer_Phone");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 315, 169, -1));
+
+        jLabel6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel6.setText("Customer_Email");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 375, 169, -1));
+
+        jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel7.setText("Date");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 426, 169, -1));
+
+        cusid.setBackground(new java.awt.Color(108, 122, 137));
+        cusid.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        cusid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cusidActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cusid, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 91, 92, -1));
+
+        cusname.setBackground(new java.awt.Color(108, 122, 137));
+        cusname.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jPanel1.add(cusname, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 154, 215, -1));
+
+        cusadd.setBackground(new java.awt.Color(108, 122, 137));
+        cusadd.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        cusadd.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        cusadd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cusaddActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cusadd, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 219, 253, 75));
+
+        cusphn.setBackground(new java.awt.Color(108, 122, 137));
+        cusphn.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jPanel1.add(cusphn, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 312, 135, -1));
+
+        cusml.setBackground(new java.awt.Color(108, 122, 137));
+        cusml.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jPanel1.add(cusml, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 372, 214, -1));
+
+        cusdate.setBackground(new java.awt.Color(108, 122, 137));
+        cusdate.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        cusdate.setForeground(new java.awt.Color(51, 51, 51));
+        cusdate.setText("yyyy/mm/dd");
+        cusdate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cusdateMouseClicked(evt);
+            }
+        });
+        jPanel1.add(cusdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 423, 135, -1));
 
         jPanel3.setBackground(new java.awt.Color(52, 73, 94));
+
+        btnnew.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnnew.setForeground(new java.awt.Color(102, 102, 102));
+        btnnew.setText("New");
+        btnnew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnnewActionPerformed(evt);
+            }
+        });
+
+        btnsave.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnsave.setForeground(new java.awt.Color(102, 102, 102));
+        btnsave.setText("Save");
+        btnsave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsaveActionPerformed(evt);
+            }
+        });
+
+        btnupdate.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnupdate.setForeground(new java.awt.Color(102, 102, 102));
+        btnupdate.setText("Update");
+        btnupdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnupdateActionPerformed(evt);
+            }
+        });
+
+        btndelete.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btndelete.setForeground(new java.awt.Color(102, 102, 102));
+        btndelete.setText("Delete");
+        btndelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btndeleteActionPerformed(evt);
+            }
+        });
+
+        btnsearch.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnsearch.setForeground(new java.awt.Color(102, 102, 102));
+        btnsearch.setText("Search");
+        btnsearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsearchActionPerformed(evt);
+            }
+        });
+
+        btndatareport.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btndatareport.setForeground(new java.awt.Color(102, 102, 102));
+        btndatareport.setText("DataReport");
+        btndatareport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btndatareportActionPerformed(evt);
+            }
+        });
+
+        home.setIcon(new javax.swing.ImageIcon(getClass().getResource("/if_8_330406 (1).png"))); // NOI18N
+        home.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                homeMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 301, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(97, 97, 97)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btndatareport)
+                            .addComponent(btnsearch)
+                            .addComponent(btnupdate)
+                            .addComponent(btnsave)
+                            .addComponent(btnnew))
+                        .addContainerGap(102, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(btndelete)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(home, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(58, 58, 58)
+                .addComponent(btnnew)
+                .addGap(48, 48, 48)
+                .addComponent(btnsave)
+                .addGap(35, 35, 35)
+                .addComponent(btnsearch)
+                .addGap(45, 45, 45)
+                .addComponent(btnupdate)
+                .addGap(39, 39, 39)
+                .addComponent(btndelete)
+                .addGap(34, 34, 34)
+                .addComponent(btndatareport)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
+                .addComponent(home, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, -1, 500));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(549, 26, 310, 620));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 860, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cusaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cusaddActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cusaddActionPerformed
+
+    private void cusidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cusidActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cusidActionPerformed
+
+    private void btnnewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnewActionPerformed
+Reset();       
+    }//GEN-LAST:event_btnnewActionPerformed
+
+    private void btnsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsaveActionPerformed
+        try{
+    con=Connect.ConnectDB();
+    
+    if(cusid.getText().equals("")){
+        JOptionPane.showMessageDialog(this,"Please enter the Customer_Id","Error",JOptionPane.ERROR_MESSAGE);
+        return;
+       }
+    
+    if(cusname.getText().equals("")){
+        JOptionPane.showMessageDialog(this,"Please enter the Customer_Name","Error",JOptionPane.ERROR_MESSAGE);
+        return;
+       }
+    
+    if(cusadd.getText().equals("")){
+        JOptionPane.showMessageDialog(this,"Please enter the Customer_address","Error",JOptionPane.ERROR_MESSAGE);
+        return;
+       }
+    
+    if(cusphn.getText().equals("")){
+        JOptionPane.showMessageDialog(this,"Please enter the phone_num.","Error",JOptionPane.ERROR_MESSAGE);
+        return;
+       }
+    
+    
+    if(cusml.getText().equals("")){
+        JOptionPane.showMessageDialog(this,"Please enter the Email_Id","Error",JOptionPane.ERROR_MESSAGE);
+        return;
+       }
+    
+    if(cusdate.getText().equals("")){
+        JOptionPane.showMessageDialog(this,"Please enter the Date","Error",JOptionPane.ERROR_MESSAGE);
+        return;
+       }
+    
+     
+    
+     Statement stmt;
+       stmt=con.createStatement();
+       String sql1="select Customer_Id from customer where Customer_Id='"+cusid.getText()+"'";
+       rs=stmt.executeQuery(sql1);
+       if(rs.next()){
+           JOptionPane.showMessageDialog(this,"Customer_Id already exist","Error",JOptionPane.ERROR_MESSAGE);
+            cusid.setText("");
+            cusid.requestDefaultFocus();
+             return;
+    }
+       
+    String sql ="insert into customer (customer_id, customer_name, customer_address, customer_phone, customer_email, date) value ('" + cusid.getText() + "', '" + cusname.getText() + "', '" + cusadd.getText() + "', '" + cusphn.getText()+ "', '" + cusml.getText() + "', '" + cusdate.getText() + "')";
+
+            pst=con.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(this,"Successfully saved","customers",JOptionPane.INFORMATION_MESSAGE);
+            btnsave.setEnabled(false);
+
+  
+    
+    
+}catch(HeadlessException  | SQLException e) {
+     JOptionPane.showMessageDialog(this,e);
+    
+    
+    
+}   
+    }//GEN-LAST:event_btnsaveActionPerformed
+
+    private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
+    
+        try {
+            con=Connect.ConnectDB();
+        String sql="update customer set customer_name='"+cusname.getText()+"',customer_address='"+cusadd.getText()+"',customer_phone='"+cusphn.getText()+"',customer_email='"+cusml.getText()+"',date='"+cusdate.getText()+"' where customer_id='" + cusid.getText()+ "'";
+        pst=con.prepareStatement(sql);
+        pst.execute();
+        JOptionPane.showMessageDialog(this,"sucessfully updated" ,"updated",JOptionPane.INFORMATION_MESSAGE);
+        btnupdate.setEnabled(false);
+        
+        }  catch (SQLException ex) {
+            Logger.getLogger(Customers.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+    }//GEN-LAST:event_btnupdateActionPerformed
+
+    private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
+       
+         try{
+            int p=JOptionPane.showConfirmDialog(this,"Are you sure want to Delete?","Confirmation",JOptionPane.OK_CANCEL_OPTION);
+            if(p==0){
+                con=Connect.ConnectDB();
+                String sql="delete from customer where customer_id ='"+cusid.getText()+"'";
+                pst=con.prepareStatement(sql);
+                pst.execute();
+                JOptionPane.showMessageDialog(this,"Successfully deleted","Record",JOptionPane.INFORMATION_MESSAGE);
+                Reset();
+            }
+        }catch(HeadlessException | SQLException e){
+            JOptionPane.showMessageDialog(this,e);
+        }   
+    }//GEN-LAST:event_btndeleteActionPerformed
+
+    private void btnsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsearchActionPerformed
+      try{
+           con=Connect.ConnectDB();
+           String sql= "select * from customer where customer_id = '"+cusid.getText()+"'";
+           pst= con.prepareStatement(sql);
+           rs= pst.executeQuery();
+           if(rs.next()){
+               
+               String add1=rs.getString("customer_name");
+               cusname.setText(add1);
+               
+                String add2=rs.getString("customer_address");
+               cusadd.setText(add2);
+               
+                String add3=rs.getString("customer_phone");
+               cusphn.setText(add3);
+               
+                String add4=rs.getString("customer_email");
+               cusml.setText(add4);
+               
+             String add5=rs.getString("date");
+               cusdate.setText(add5);
+               
+           }
+       } catch (SQLException ex) {
+           
+      
+         
+       
+          
+         
+        
+               
+       }  
+           
+    }//GEN-LAST:event_btnsearchActionPerformed
+
+    private void cusdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cusdateMouseClicked
+   cusdate.setText("");
+    }//GEN-LAST:event_cusdateMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+      System.exit(0);
+      
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void homeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeMouseClicked
+       this.dispose();
+       Main m = new Main();
+       m.setVisible(true);
+    }//GEN-LAST:event_homeMouseClicked
+
+    private void btndatareportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndatareportActionPerformed
+
+      
+      
+            
+            
+            
+            
+            
+            
+        
+            
+        
+    }//GEN-LAST:event_btndatareportActionPerformed
+    
+    /**
+     * @param args the command line arguments
+     */
+           
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+       Calendar calender = Calendar.getInstance();
+       java.sql.Date startDate =new java.sql.Date(calender.getTime().getTime());
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -116,8 +515,38 @@ public class Customers extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btndatareport;
+    private javax.swing.JButton btndelete;
+    private javax.swing.JButton btnnew;
+    private javax.swing.JButton btnsave;
+    private javax.swing.JButton btnsearch;
+    private javax.swing.JButton btnupdate;
+    private javax.swing.JTextField cusadd;
+    private javax.swing.JTextField cusdate;
+    private javax.swing.JTextField cusid;
+    private javax.swing.JTextField cusml;
+    private javax.swing.JTextField cusname;
+    private javax.swing.JTextField cusphn;
+    private javax.swing.JLabel home;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
+
+    private void Reset() {
+       cusid.setText("");
+       cusname.setText("");
+       cusadd.setText("");
+       cusphn.setText("");
+       cusml.setText("");
+       cusdate.setText("");
+    }
 }

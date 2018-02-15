@@ -1,3 +1,15 @@
+
+import java.awt.HeadlessException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,6 +21,9 @@
  * @author lokesh
  */
 public class Sale extends javax.swing.JFrame {
+    Connection con=null;
+    ResultSet rs=null;
+    PreparedStatement pst=null;
 
     /**
      * Creates new form Sale
@@ -28,43 +43,292 @@ public class Sale extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        btnsave = new javax.swing.JButton();
+        btnupdate = new javax.swing.JButton();
+        btndelete = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
+        btndatareport = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtson = new javax.swing.JTextField();
+        txtcusname = new javax.swing.JTextField();
+        txtproid = new javax.swing.JTextField();
+        txtqun = new javax.swing.JTextField();
+        date = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(25, 37, 49));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(102, 204, 255));
+
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel1.setText("Sale ");
+
+        jButton6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(255, 0, 0));
+        jButton6.setText("x");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 742, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton6))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 33, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                .addComponent(jButton6))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
         jPanel3.setBackground(new java.awt.Color(52, 73, 94));
+
+        jButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(102, 102, 102));
+        jButton1.setText("New");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        btnsave.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnsave.setForeground(new java.awt.Color(102, 102, 102));
+        btnsave.setText("Save");
+        btnsave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsaveActionPerformed(evt);
+            }
+        });
+
+        btnupdate.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnupdate.setForeground(new java.awt.Color(102, 102, 102));
+        btnupdate.setText("Update");
+        btnupdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnupdateActionPerformed(evt);
+            }
+        });
+
+        btndelete.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btndelete.setForeground(new java.awt.Color(102, 102, 102));
+        btndelete.setText("Delete");
+        btndelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btndeleteActionPerformed(evt);
+            }
+        });
+
+        btnSearch.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnSearch.setForeground(new java.awt.Color(102, 102, 102));
+        btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+
+        btndatareport.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btndatareport.setForeground(new java.awt.Color(102, 102, 102));
+        btndatareport.setText("DataReport");
+        btndatareport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btndatareportActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/if_8_330406 (1).png"))); // NOI18N
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(113, 113, 113)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btndatareport)
+                    .addComponent(btnSearch)
+                    .addComponent(btndelete)
+                    .addComponent(btnupdate)
+                    .addComponent(btnsave)
+                    .addComponent(jButton1))
+                .addContainerGap(128, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 520, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(139, 139, 139)
+                .addComponent(jButton1)
+                .addGap(30, 30, 30)
+                .addComponent(btnsave)
+                .addGap(34, 34, 34)
+                .addComponent(btnSearch)
+                .addGap(33, 33, 33)
+                .addComponent(btnupdate)
+                .addGap(27, 27, 27)
+                .addComponent(btndelete)
+                .addGap(33, 33, 33)
+                .addComponent(btndatareport)
+                .addGap(35, 35, 35)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 29, 300, 520));
+        txtson.setBackground(new java.awt.Color(108, 122, 137));
+        txtson.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+
+        txtcusname.setBackground(new java.awt.Color(108, 122, 137));
+        txtcusname.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        txtcusname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtcusnameActionPerformed(evt);
+            }
+        });
+
+        txtproid.setBackground(new java.awt.Color(108, 122, 137));
+        txtproid.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        txtproid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtproidActionPerformed(evt);
+            }
+        });
+
+        txtqun.setBackground(new java.awt.Color(108, 122, 137));
+        txtqun.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        txtqun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtqunActionPerformed(evt);
+            }
+        });
+
+        date.setBackground(new java.awt.Color(108, 122, 137));
+        date.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        date.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dateActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel7.setText("So_No.");
+
+        jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel8.setText("Customer_Name");
+
+        jLabel9.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel9.setText("Product_Id");
+
+        jLabel10.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel10.setText("Quantity");
+
+        jLabel11.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel11.setText("Sale_Date");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(156, 156, 156)
+                .addComponent(txtson, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addComponent(jLabel8)
+                .addGap(79, 79, 79)
+                .addComponent(txtcusname, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(131, 131, 131)
+                .addComponent(txtproid, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(131, 131, 131)
+                .addComponent(txtqun, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(131, 131, 131)
+                .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(576, 576, 576)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(142, 142, 142)
+                        .addComponent(jLabel7))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(136, 136, 136)
+                        .addComponent(txtson, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel8))
+                    .addComponent(txtcusname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel9))
+                    .addComponent(txtproid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel10))
+                    .addComponent(txtqun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel11))
+                    .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,7 +342,172 @@ public class Sale extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtcusnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcusnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtcusnameActionPerformed
+
+    private void txtproidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtproidActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtproidActionPerformed
+
+    private void dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dateActionPerformed
+
+    private void txtqunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtqunActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtqunActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+         try{ 
+           
+           con=Connect.ConnectDB();
+           String sql= "select * from sale_order where So_no = '"+txtson.getText()+"'";
+           pst= con.prepareStatement(sql);
+           rs= pst.executeQuery();
+           if(rs.next()){
+               
+               String add1=rs.getString("Customer_Name");
+               txtcusname.setText(add1);
+               
+                String add2=rs.getString("Product_id");
+               txtproid.setText(add2);
+               
+                String add3=rs.getString("Quantity");
+               txtqun.setText(add3);
+               
+               
+               String add4=rs.getString("date");
+               date.setText(add4);
+               
+              
+               
+              
+               
+              
+
+    }                                         
+    }   catch (SQLException ex) {
+            Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+System.exit(0);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+Reset();
+// TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsaveActionPerformed
+        try{
+    con=Connect.ConnectDB();
+    
+    if(txtson.getText().equals("")){
+        JOptionPane.showMessageDialog(this,"Please enter the so_no","Error",JOptionPane.ERROR_MESSAGE);
+        return;
+       }
+    
+    if(txtcusname.getText().equals("")){
+        JOptionPane.showMessageDialog(this,"Please enter the Customer Name","Error",JOptionPane.ERROR_MESSAGE);
+        return;
+       }
+    
+    if(txtproid.getText().equals("")){
+        JOptionPane.showMessageDialog(this,"Please enter the Product_id","Error",JOptionPane.ERROR_MESSAGE);
+        return;
+       }
+    
+    if(txtqun.getText().equals("")){
+        JOptionPane.showMessageDialog(this,"Please enter the Quantity","Error",JOptionPane.ERROR_MESSAGE);
+        return;
+       }
+    
+    
+    if(date.getText().equals("")){
+        JOptionPane.showMessageDialog(this,"Please enter the date","Error",JOptionPane.ERROR_MESSAGE);
+        return;
+       }
+    
+   
+    
+     
+    
+     Statement stmt;
+       stmt=con.createStatement();
+       String sql1="select So_no from sale_order where So_no='"+txtson.getText()+"'";
+       rs=stmt.executeQuery(sql1);
+       if(rs.next()){
+           JOptionPane.showMessageDialog(this,"Product_Id already exist","Error",JOptionPane.ERROR_MESSAGE);
+            txtson.setText("");
+            txtson.requestDefaultFocus();
+             return;
+    }
+       
+    String sql ="insert into sale_order (So_no, Customer_Name, Product_id, Quantity, date) value ('" + txtson.getText() + "', '" + txtcusname.getText() + "', '" + txtproid.getText() + "', '" + txtqun.getText() + "', '" + date.getText() + "')";
+
+            pst=con.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(this,"Successfully saved","Sale_order",JOptionPane.INFORMATION_MESSAGE);
+            btnsave.setEnabled(false);
+
+  
+    
+    
+}catch(HeadlessException  | SQLException e) {
+     JOptionPane.showMessageDialog(this,e);
+    
+    
+    
+}   
+        
+        
+
+    }//GEN-LAST:event_btnsaveActionPerformed
+
+    private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
+       try{
+           con=Connect.ConnectDB();
+           String sql="update sale_order set Customer_Name='"+ txtcusname.getText() + "',Product_id='"+ txtproid.getText()+"',Quantity'"+ txtqun.getText() +"',date='" + date.getText() + "' where So_no='" + txtson.getText() + "'";
+           pst=con.prepareStatement(sql);
+           pst.execute();
+           JOptionPane.showMessageDialog(this,"Successfully updated","Record",JOptionPane.INFORMATION_MESSAGE);
+           btnupdate.setEnabled(false);
+       } catch (SQLException ex) {
+            Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnupdateActionPerformed
+
+    private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
+  try{
+            int p=JOptionPane.showConfirmDialog(this,"Are you sure want to Delete?","Confirmation",JOptionPane.OK_CANCEL_OPTION);
+            if(p==0){
+                con=Connect.ConnectDB();
+                String sql="delete from sale_order where So_no ='"+txtson.getText()+"'";
+                pst=con.prepareStatement(sql);
+                pst.execute();
+                JOptionPane.showMessageDialog(this,"Successfully deleted","Record",JOptionPane.INFORMATION_MESSAGE);
+                Reset();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Sale.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+    }//GEN-LAST:event_btndeleteActionPerformed
+
+    private void btndatareportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndatareportActionPerformed
+   
+    }//GEN-LAST:event_btndatareportActionPerformed
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+      this.dispose();
+       Main m = new Main();
+       m.setVisible(true); 
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     /**
      * @param args the command line arguments
@@ -116,8 +545,36 @@ public class Sale extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JButton btndatareport;
+    private javax.swing.JButton btndelete;
+    private javax.swing.JButton btnsave;
+    private javax.swing.JButton btnupdate;
+    private javax.swing.JTextField date;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JTextField txtcusname;
+    private javax.swing.JTextField txtproid;
+    private javax.swing.JTextField txtqun;
+    private javax.swing.JTextField txtson;
     // End of variables declaration//GEN-END:variables
+
+    private void Reset() {
+        txtson.setText("");
+        txtcusname.setText("");
+        txtproid.setText("");
+        txtqun.setText("");
+        date.setText("");
+                
+    }
 }
