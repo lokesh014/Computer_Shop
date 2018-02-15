@@ -341,7 +341,7 @@ p.setVisible(true);
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         this.dispose();
-        PURCHASE p=new PURCHASE();
+        Purchase p=new    Purchase();
         p.setVisible(true);
     }//GEN-LAST:event_jLabel5MouseClicked
 
